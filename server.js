@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const axios = require("axios"); // Importe o Axios aqui
 const app = express();
 const port = 4642;
+const cors = require('cors');
 
 require("dotenv").config();
 
@@ -14,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.json());
 app.set("views", path.join(__dirname, "views")); // Certifique-se de definir o diretório de visualizações corretamente
+app.use(cors());
 
 app.use(
   session({
