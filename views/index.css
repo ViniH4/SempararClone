@@ -1,0 +1,172 @@
+/* Reset de margens e preenchimentos para garantir a consistência em todos os navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: Verdana;
+}
+
+/* Estilo do header com a sombra */
+header {
+    background-color: #fff;
+    text-align: left;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    padding: 10px 0; /* Adicionado espaço acima e abaixo do cabeçalho */
+}
+
+/* CSS para o cursor quando sobre campos desabilitados */
+.disabled-cursor {
+    cursor: not-allowed;
+}
+
+/* Estilo da logo na esquerda */
+.logo img {
+    width: 100px;
+    margin-left: 20px; /* Reduzido o espaço à esquerda da logo */
+}
+
+/* Centralização do conteúdo */
+.content {
+    text-align: center;
+    padding: 20px;
+}
+
+.content h1 {
+    color: #505050;
+    font-weight: bold;
+    margin-bottom: 10px; /* Reduzido o espaço abaixo do título */
+    font-size: 24px; /* Tamanho de fonte maior */
+}
+
+.content p {
+    color: #505050;
+    font-size: 16px; /* Tamanho de fonte maior */
+    margin-bottom: 10px; /* Reduzido o espaço abaixo do parágrafo */
+}
+
+/* Estilo do formulário */
+form {
+    margin-top: 20px;
+    align-items: center;
+    width: 100%;
+}
+
+button {
+    text-align: center;
+    width: 50%; /* O botão ocupa a largura total do formulário */
+    padding: 10px; /* Espaçamento interno do botão aumentado */
+}
+
+input {
+    margin: 5px;
+}
+
+input[type="text"] {
+    width: 50%; /* O campo de texto ocupa a largura total do formulário */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+input[type="text"]:focus {
+    border-color: #8FBBDD;
+    outline: none;
+}
+
+/* Estilo do Captcha */
+.captcha {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Estilo do botão de acesso */
+button {
+    background-color: #d60b52;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #aa0941;
+}
+
+/* Estilo dos botões de abas */
+.tab-button {
+    background-color: #f1f1f1;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Estilo do botão de aba ativa */
+.active-button {
+    background-color: #ccc;
+}
+
+.gif {
+    width: 18px;
+}
+
+/* Estilo do botão do WhatsApp */
+.whatsapp-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    animation: jump 1s infinite alternate;
+}
+
+.whatsapp-button img {
+    width: 60px; /* Reduzido o tamanho da imagem */
+    height: auto;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+/* Animação de pulo */
+@keyframes jump {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Adicione regras de mídia para tornar o site responsivo */
+@media (max-width: 768px) {
+    .content h1 {
+        font-size: 20px; /* Reduzido o tamanho da fonte para dispositivos móveis */
+    }
+    
+    .content p {
+        font-size: 14px; /* Reduzido o tamanho da fonte para dispositivos móveis */
+    }
+
+    input[type="text"] {
+        width: 80%; /* O campo de texto ocupa a largura total do formulário */
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    button {
+        text-align: center;
+        width: 80%; /* O botão ocupa a largura total do formulário */
+        padding: 10px; /* Espaçamento interno do botão aumentado */
+    }
+                
+            
+}

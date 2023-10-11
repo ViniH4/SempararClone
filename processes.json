@@ -1,0 +1,20 @@
+{
+    "apps": [
+        {
+        "name": "servidor-site",
+        "script": "server.js",
+        "instances": "1",
+        "exec_mode": "cluster",
+        "env": {
+            "PORT": 3000,
+            "NODE_ENV": "production "
+        }
+    },
+    {
+        "name": "servidor-pix",
+        "script": "gerador-pix/index.js",
+        "instances": "1",
+        "exec_mode": "fork"
+    }
+    ]
+}

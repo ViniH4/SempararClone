@@ -1,0 +1,53 @@
+/* erro.css */
+
+* {
+    font-family: Verdana;
+}
+
+header {
+    background-color: #fff;
+    text-align: left;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px ;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+header img {
+    width: 100px;
+}
+
+
+.content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    color: #505050;
+    margin: 20px auto; /* Isso centraliza o elemento verticalmente e o alinha ao centro horizontalmente */
+}
+
+h1 {
+    width: 100%;
+    min-height: 50px; /* Defina uma altura mínima para evitar que o h1 encolha muito */
+    margin-bottom: 20px; /* Adicionando um espaço inferior para separação visual */
+}
+
+button {
+    outline: none;
+    padding: 10px 20px;
+    width: 30%;
+    border: none;
+    background-color: #d60b52;
+    color: #fff;
+    border-radius: 7px;
+}
+
+button:hover {
+    background-color: #96093a;
+    color: #fff;
+    cursor: pointer;
+}

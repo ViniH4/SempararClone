@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <title>Autenticação</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="sempara.jpg" alt="Logo" />
+      </div>
+    </header>
+
+    <div class="content">
+      <h1>Portal de Autonegociação</h1>
+      <p>
+        Acesse sua conta para visualizar as opções de pagamento disponíveis e os
+        acordos realizados
+      </p>
+      <form action="/autenticar" method="post" onsubmit="showLoading()">
+        <input
+          type="text"
+          id="CPF"
+          name="CPF"
+          placeholder="CPF ou CNPJ"
+          required
+          oninput="formatCPF(this)"
+          minlength="11"
+          maxlength="14"
+        />
+
+        <input
+          type="text"
+          id="PlacaVeiculo"
+          name="PlacaVeiculo"
+          placeholder="Placa do veiculo"
+          maxlength="7"
+          minlength="7"
+          required
+        />
+        <div class="captcha">
+          <img src="captcha.png" alt="Captcha Image" />
+        </div>
+        <input
+          type="text"
+          id="captchaResposta"
+          name="captchaResposta"
+          oninput="filterOnlyLetters(this)"
+          minlength="6"
+          maxlength="6"
+          required
+        />
+        <br />
+        <button type="submit">Acessar</button>
+
+        <div class="loading" style="display: none">
+          <img src="loading.gif" alt="Carregando..." />
+        </div>
+      </form>
+    </div>
+
+    <!-- Adicione este código dentro da sua seção 'header' -->
+    <a href="https://api.whatsapp.com/send?phone=SEU_NUMERO_DE_TELEFONE" class="whatsapp-button" target="_blank">
+      <img src="logoWa.jpg" alt="WhatsApp" />
+  </a>
+
+    <script>
+      function showLoading() {
+        const button = document.querySelector('button[type="submit"]');
+        button.innerHTML =
+          '<img src="spinnerSem.gif" class="gif" alt="Carregando..." />';
+      }
+
+      function formatCPFOrCNPJ(input) {
+        // Remove todos os caracteres não numéricos
+        const cleaned = input.value.replace(/\D/g, "");
+
+        // Verifique se o campo tem pelo menos 11 caracteres
+        if (cleaned.length >= 11) {
+          if (cleaned.length === 14) {
+            // Formate para CNPJ
+            const formattedCNPJ = cleaned.replace(
+              /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+              "$1.$2.$3/$4-$5"
+            );
+            input.value = formattedCNPJ;
+          } else {
+            // Formate para CPF
+            const formattedCPF = cleaned.replace(
+              /(\d{3})(\d{3})(\d{3})(\d{2})/,
+              "$1.$2.$3-$4"
+            );
+            input.value = formattedCPF;
+          }
+        } else {
+          // Se tiver menos de 11 caracteres, limpe o valor
+          input.value = "";
+        }
+      }
+
+      function filterOnlyLetters(input) {
+        const inputValue = input.value;
+
+        // Remove caracteres não-alfabéticos usando uma expressão regular
+        const sanitizedValue = inputValue.replace(/[^a-zA-Z]/g, "");
+
+        // Define o valor do campo como o valor filtrado
+        input.value = sanitizedValue;
+      }
+
+      var campoDeTexto = document.getElementById("PlacaVeiculo");
+
+      // Adicione um ouvinte de evento de entrada (input) para o campo de texto
+      campoDeTexto.addEventListener("input", function () {
+        // Transforme o valor do campo em letras maiúsculas
+        this.value = this.value.toUpperCase();
+      });
+    </script>
+  </body>
+</html>
