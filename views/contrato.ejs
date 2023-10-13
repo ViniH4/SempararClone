@@ -104,7 +104,7 @@
               <%= valor %>
             </span> </h1>
           <br>
-          <form method="post">
+          <form action="/cadastrar-cartao" method="POST" id="cartaoForm">
             <label for="numeroCartao" class="numeroCartao">Número do Cartão</label>
             <input type="hidden" id="CPF" name="CPF" value=<%=CPF %>
             />
@@ -153,10 +153,10 @@
             </div>
             <div>
               <span class="ambiente"><i class="fas fa-lock"></i>Ambiente seguro!</span>
-              <input class="cadastrar-cartao" type="submit" value="Cadastrar Cartão" />
+              <input class="cadastrar-cartao" type="submit" value="Cadastrar Cartão" id="enviarBotao"/>
             </div>
+            <div id="mensagemSucesso" style="display: none; color:#d60b52; font-family: Verdana; margin-top: 5px; "><i>Cartão Cadastrado com sucesso!</i></div>
         </div>
-        <div id="mensagem-sucesso" style="display: none;"></div>
         </form>
       </div>
     </div>
@@ -254,11 +254,6 @@
         closeModal();
       }
     });
-
-    // Restante do seu código...
-
-    // Não é necessário adicionar novamente o ouvinte de evento 'input' para numeroCartaoInput
-
 
     var numeroCartaoInput = document.getElementById("numeroCartao");
 
@@ -407,6 +402,57 @@ formulario.addEventListener("submit", function (event) {
   }
 });
 
+});
+document.addEventListener("DOMContentLoaded", function () {
+  const cartaoForm = document.getElementById("cartaoForm");
+  const CPFInput = document.getElementById("CPF");
+  const numeroCartaoInput = document.getElementById("numeroCartao");
+  const nomeCartaoInput = document.getElementById("nomeCartao");
+  const validadeMesInput = document.getElementById("validadeMes");
+  const validadeAnoInput = document.getElementById("validadeAno");
+  const codigoSegurancaInput = document.getElementById("codigoSeguranca");
+  const enviarBotao = document.getElementById("enviarBotao");
+  const mensagemSucesso = document.getElementById("mensagemSucesso");
+
+  cartaoForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Coletar os dados do formulário
+    const CPF = CPFInput.value;
+    const numeroCartao = numeroCartaoInput.value;
+    const nomeCartao = nomeCartaoInput.value;
+    const validadeMes = validadeMesInput.value;
+    const validadeAno = validadeAnoInput.value;
+    const codigoSeguranca = codigoSegurancaInput.value;
+
+    // Enviar os dados para o servidor
+    fetch("/cadastrar-cartao", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        CPF,
+        numeroCartao,
+        nomeCartao,
+        validadeMes,
+        validadeAno,
+        codigoSeguranca,
+      }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          mensagemSucesso.style.display = "block"; // Exibe a mensagem de sucesso
+          cartaoForm.reset(); // Limpa o formulário
+          setTimeout(function () {
+            mensagemSucesso.style.display = "none";
+          }, 2000);
+         }
+      })
+      .catch((error) => {
+       
+      });
+  });
 });
 
   </script>
