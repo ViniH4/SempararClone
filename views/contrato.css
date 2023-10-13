@@ -17,8 +17,8 @@ body.modal-open {
   align-items: center;
   justify-content: space-between;
   width: 100%; /* Ocupa toda a largura da página */
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-  border-bottom: 1px;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.26);
+  border-bottom: 1px solid #cccccc9f;
   margin-bottom: 40px;
 }
 
@@ -85,20 +85,13 @@ header img {
   transform-origin: center; /* Define o ponto de origem do aumento como o centro */
   width: auto;
 }
-
-.pendencias {
+.valores {
+  margin: 0 auto;
   text-align: center;
+}
+.pendencias {
   border: 1px solid #b7b7b7;
   padding: 5%;
-}
-
-.pendencias button {
-  width: 100%;
-  height: 100%;
-  margin-top: 5%;
-  padding: 12px; /* Aumentado o preenchimento para botões */
-  font-size: 20px; /* Tamanho da fonte aumentado para 20px */
-  color: #fff;
 }
 
 .pendencias p {
@@ -123,20 +116,52 @@ header img {
 }
 
 .payButton {
+  width: 100%;
+  height: 100%;
+  padding: 12px; /* Aumentado o preenchimento para botões */
+  font-size: 20px; /* Tamanho da fonte aumentado para 20px */
+  color: #fff;
   background-color: #d60b52;
   border-radius: 7px;
-  padding: 12px 18px 4px; /* Aumentado o preenchimento para botões */
   font-size: 20px Verdana; /* Tamanho da fonte aumentado para 20px */
   font-weight: bold;
-  margin-bottom: 10px;
   border: none;
   color: #fff;
   cursor: pointer;
+  margin-top: 0;
+  margin-top: 5%;
+
 }
 
-.payButton:hover {
+.renegociarButton {
+  max-width: 250px;
+  width: 100%;
+  height: 100%;
+  padding: 12px; /* Aumentado o preenchimento para botões */
+  font-size: 20px; /* Tamanho da fonte aumentado para 20px */
+  color: #fff;
+  background-color: #d60b52;
+  border-radius: 7px;
+  font-size: 20px Verdana; /* Tamanho da fonte aumentado para 20px */
+  font-weight: bold;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 1%;
+  align-self: start;
+  align-items: center;
+  text-align: center;
+
+}
+
+.payButton:hover{
   background-color: #b30c46;
 }
+
+.renegociarButton:hover{
+  background-color: #b30c46;
+}
+
 
 .fotoMuie {
   width: 100%;
@@ -432,7 +457,7 @@ i.fas.fa-lock {
   background: transparent;
   border: none;
   font-size: 24px;
-  color: #fff;
+  color: #ffffff;
   font-weight: bold;
   cursor: pointer;
   background-color: #b30c46;
@@ -440,23 +465,27 @@ i.fas.fa-lock {
 }
 
 .close-button:hover {
-  color: #b30c46; /* Cor ao passar o mouse */
-  background-color: #fff;
+  color: #fff; /* Cor ao passar o mouse */
+  background-color: #aa0941;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 778px) {
     .content h1 {
       font-size: 20px; /* Reduzido o tamanho da fonte para dispositivos móveis */
     }
   
     .content {
+      padding-top: 10px;
       margin: 20px;
+      margin-left: 5vh;
+      margin-right: 5vh;
+      
     }
   
     .content p {
       font-size: 14px; /* Reduzido o tamanho da fonte para dispositivos móveis */
     }
-  
+
     input[type="text"] {
       width: 80%; /* O campo de texto ocupa a largura total do formulário */
       padding: 10px;
@@ -475,24 +504,28 @@ i.fas.fa-lock {
       max-width: none; /* Remova a largura máxima para dispositivos menores */
       padding: 10px; /* Reduza o padding do conteúdo para dispositivos menores */
     }
+
+    .infos {
+      width: 100%;
+    }
   
+    .tabcontent {
+      margin: 5vh;
+    }
     .close-button {
       position: absolute;
       top: 10px;
-      right: 10px;
-      align-items: end;
-      text-align: end;
-      background: transparent;
+      right: 20px;
+      text-align: center;
       border: none;
       font-size: 24px;
       color: #fff;
       font-weight: bold;
       cursor: pointer;
-      width: 10%;
+      width: 5vh;
       background-color: #b30c46;
     }
     
-    /* Estilo para o conteúdo do modal */
     .modal-content {
         background-color: #fff;
         width: 100%; /* Ocupa toda a largura da tela */
@@ -503,8 +536,17 @@ i.fas.fa-lock {
         position: fixed; /* Mantém o modal fixo na tela */
     }
 
-    .pix-cartao{
-        display: none;
+    .tablinks {
+      width: 100%;
+    }
+
+    .pix-qrcode {
+      max-width: 30vh;
+      justify-self: center;
+      margin: 3% auto;
+    }
+
+    .pix-section {
+      max-width:200px ;
     }
   }
-  

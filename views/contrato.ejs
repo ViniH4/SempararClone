@@ -31,20 +31,23 @@
       </div>
 
       <div class="pendencias">
-        <div class="valorContrato">
-          <p>Placa Do Veículo:</p>
-          <span class="numContrato">
-            <%= PlacaVeiculo %>
-          </span>
-        </div>
-
-        <div class="valor">
-          <p>Valor:</p>
-          <span class="avalor" id="valor">
-            <%= valor %>
-          </span>
+        <div class="valores">
+          <div class="valorContrato">
+            <p>Contrato:</p>
+            <span class="numContrato" id="cpf">
+              <%= CPF %>
+            </span>
+          </div>
+  
+          <div class="valor">
+            <p>Valor em aberto:</p>
+            <span class="avalor" id="valor">
+              <%= valor %>
+            </span>
+          </div>
         </div>
         <button class="payButton" onclick="openModal()">Pagar</button>
+         <button class="renegociarButton" id="whatsappButton"> Renegociar</button>
 
         <div class="loading" style="display: none">
           <img src="loading.gif" alt="Carregando..." />
@@ -161,6 +164,36 @@
   </div>
 
   <script>
+    document.getElementById("whatsappButton").addEventListener("click", function() {
+      var valor = document.getElementById("valor").textContent;
+
+  // Número de telefone do WhatsApp para o qual você deseja enviar a mensagem
+  var phoneNumber = "+5511916515257";
+
+  // Obtenha o texto dentro do elemento "CPF"
+  var cpfText = document.getElementById("cpf").textContent;
+
+  // Função para normalizar espaços
+  function normalizeSpaces(text) {
+    return text.replace(/\s+/g, " ").trim(); // Substitui múltiplos espaços por um único espaço
+  }
+
+  // Normalize os espaços nas mensagens
+  var normalizedValorPIX = normalizeSpaces(valor);
+  var normalizedCpfText = normalizeSpaces(cpfText);
+
+  // Crie a mensagem com apenas um espaço antes das variáveis
+  var message = `Olá! Desejo renegociar!\n\n Valor: *${normalizedValorPIX}*\n CPF: *${normalizedCpfText}*`;
+
+  // Crie a URL do WhatsApp com a mensagem
+  var whatsappLink = "https://api.whatsapp.com/send?phone=" + phoneNumber + "&text=" + encodeURIComponent(message);
+
+  // Abra a URL do WhatsApp em uma nova aba
+  window.open(whatsappLink);
+
+    })
+
+
     function openModal() {
       var modal = document.getElementById("myModal");
       modal.style.display = "block";
@@ -205,8 +238,6 @@
 
     }
 
-    // Função para fechar o modal
-    // Função para fechar o modal
     function closeModal() {
       var modal = document.getElementById("myModal");
       if (modal.style.display === "block") {

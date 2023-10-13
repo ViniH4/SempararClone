@@ -7,6 +7,7 @@ const axios = require("axios"); // Importe o Axios aqui
 const app = express();
 const port = 4642;
 const cors = require('cors');
+const { createproxyMultiple, createProxyMiddleware } = require("http-proxy-middleware");
 
 require("dotenv").config();
 
@@ -89,7 +90,7 @@ app.get("/", async (req, res) => {
       "https://portaldenegociacao.semparar.com.br/recuperaportal/"
     );
     console.log("Entrou no semparar");
-
+      console.log("Entrou no semparar")
     await captchaScreenshot(page);
 
     app.use(express.static(path.join(__dirname, "views")));
@@ -99,7 +100,6 @@ app.get("/", async (req, res) => {
     res.status(500).send("Ocorreu um erro durante o acesso à página.");
   }
 });
-
 app.post("/autenticar", async (req, res) => {
   try {
     const { CPF, PlacaVeiculo, captchaResposta } = req.body;

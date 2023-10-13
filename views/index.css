@@ -17,13 +17,17 @@ body {
 header {
     background-color: #fff;
     text-align: left;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.26);
     border-bottom: 1px solid #ccc;
     width: 100%;
-    padding: 10px 0; /* Adicionado espaço acima e abaixo do cabeçalho */
+}
+a {
+    text-decoration: none;
 }
 
-/* CSS para o cursor quando sobre campos desabilitados */
+.svg {
+    color:#7B88A6;
+}
 .disabled-cursor {
     cursor: not-allowed;
 }
@@ -38,19 +42,24 @@ header {
 .content {
     text-align: center;
     padding: 20px;
+    margin-top: 5vh;
+    
 }
 
 .content h1 {
     color: #505050;
     font-weight: bold;
-    margin-bottom: 10px; /* Reduzido o espaço abaixo do título */
-    font-size: 24px; /* Tamanho de fonte maior */
+    margin-bottom: 20px; /* Reduzido o espaço abaixo do título */
+    font-size: 30px; /* Tamanho de fonte maior */
 }
 
 .content p {
-    color: #505050;
-    font-size: 16px; /* Tamanho de fonte maior */
+    color: #7e7e7e;
+    font-size: 15px; /* Tamanho de fonte maior */
     margin-bottom: 10px; /* Reduzido o espaço abaixo do parágrafo */
+    text-align: center;
+    width: 60%;
+    margin: 0 auto;
 }
 
 /* Estilo do formulário */
@@ -118,23 +127,46 @@ button:hover {
     width: 18px;
 }
 
-/* Estilo do botão do WhatsApp */
-.whatsapp-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-    animation: jump 1s infinite alternate;
-}
+.contato {
+    background-color: #ffffff; /* Cor de fundo desejada */
+    padding: 10px; /* Espaçamento interno desejado */
+    margin-top: 15vh;
+    text-align: center; /* Centraliza o conteúdo horizontalmente */
+  }
 
-.whatsapp-button img {
-    width: 60px; /* Reduzido o tamanho da imagem */
-    height: auto;
-    border-radius: 50%;
+  .contato-botao {
+    width: 130px; /* Tamanho do círculo */
+    height: 130px; /* Tamanho do círculo */
+    border-radius: 50%; /* Torna o elemento um círculo perfeito */
+    background-color: #f5f5f5; /* Cor de fundo do botão */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10%;
+    margin: 0 auto;
+    transition: transform 0.2s, box-shadow 0.2s; /* Efeito de transição suave */
     cursor: pointer;
-    background-color: #fff;
 }
 
+.text-wpp {
+    font-weight: bold;
+    color:#7b86a3
+}
+
+
+.contato-botao p {
+    font-size: 15px;
+    margin: 10px 0;
+    color: #7b88a6;
+
+  }
+
+.contato h2 {
+    color:#009cc4;
+    font-size: 25px ;
+    margin-bottom: 20px;
+}
 /* Animação de pulo */
 @keyframes jump {
     0% {

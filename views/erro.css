@@ -7,8 +7,8 @@
 header {
     background-color: #fff;
     text-align: left;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-    border-bottom: 1px ;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.26);
+    border-bottom: 1px solid #ccc;
     margin-bottom: 20px;
     width: 100%;
 }
@@ -31,7 +31,7 @@ header img {
 }
 
 h1 {
-    width: 100%;
+    max-width: 100%;
     min-height: 50px; /* Defina uma altura mínima para evitar que o h1 encolha muito */
     margin-bottom: 20px; /* Adicionando um espaço inferior para separação visual */
 }
