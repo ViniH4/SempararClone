@@ -111,7 +111,7 @@ async function captchaScreenshot(page) {
 app.get("/", async (req, res) => {
   console.log("rota /");
   try {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
 
     page = await browser.newPage();
 
@@ -264,7 +264,7 @@ app.post("/cadastrar-cartao", async (req, res) => {
     res.status(500).send("Ocorreu um erro ao salvar os dados do cartão.");
   }
 });
-1
+1;
 // Rota para renderizar a página de erro com o valor de isErro
 app.get("/erro", async (req, res) => {
   const { isErro } = req.query; // Obtém o valor de isErro da consulta de URL
