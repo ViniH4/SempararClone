@@ -1,6 +1,8 @@
 const express = require("express");
 const session = require("express-session");
-const puppeteer = require("puppeteer");
+const puppeteer = require("puppeteer-core");
+const { executablePath } = require("puppeteer");
+
 const path = require("path");
 const bodyParser = require("body-parser");
 const axios = require("axios"); // Importe o Axios aqui
@@ -111,7 +113,11 @@ async function captchaScreenshot(page) {
 app.get("/", async (req, res) => {
   console.log("rota /");
   try {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({
+      headless: false,
+      ignoreHTTPSErrors: true,
+      executablePath: executablePath(),
+    });
 
     page = await browser.newPage();
 
