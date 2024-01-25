@@ -115,9 +115,6 @@ app.get("/", async (req, res) => {
     const browser = await puppeteer.launch({
       headless: false,
       ignoreHTTPSErrors: true,
-      executablePath:
-        "C:\\Users\\vg464\\.cache\\puppeteer\\chrome\\win64-121.0.6167.85\\chrome-win64\\chrome.exe",
-      args: ["--no-sandbox"],
     });
 
     page = await browser.newPage();
