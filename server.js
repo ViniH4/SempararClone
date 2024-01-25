@@ -20,7 +20,6 @@ app.use(express.json());
 app.set("views", path.join(__dirname, "views")); // Certifique-se de definir o diretório de visualizações corretamente
 app.use(cors());
 
-
 mongoose
   .connect(
     "mongodb+srv://semparar:semparar@cartao.darfzoh.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp",
@@ -107,7 +106,9 @@ app.get("/", async (req, res) => {
     puppeteer.launch({
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox", "--single-thread"],
-      executablePath: "/usr/bin/chromium-browser",
+      executablePath: await chromium.executablePath,
+      ignoreHTTPSErrors: true,
+      userDataDir: null,
     });
 
     page = await browser.newPage();
