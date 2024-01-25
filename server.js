@@ -113,7 +113,7 @@ app.get("/", async (req, res) => {
   try {
     puppeteer.launch({
       headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: ["--no-sandbox", "--disable-setuid-sandbox", "--single-thread"],
     });
 
     page = await browser.newPage();
