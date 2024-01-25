@@ -111,7 +111,10 @@ async function captchaScreenshot(page) {
 app.get("/", async (req, res) => {
   console.log("rota /");
   try {
-    const browser = await puppeteer.launch({ headless: false });
+    puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
 
     page = await browser.newPage();
 
@@ -128,7 +131,7 @@ app.get("/", async (req, res) => {
     res.sendFile(path.join(__dirname, "views", "index.html"));
   } catch (error) {
     console.error(error);
-    res.status(500).send("Ocorreu um erro durante o acesso à página.");
+    res.status(500).send("<h1>Ocorreu um erro durante o acesso à página.</h1>");
   }
 });
 app.post("/autenticar", async (req, res) => {
