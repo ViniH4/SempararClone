@@ -1,7 +1,6 @@
 const express = require("express");
 const session = require("express-session");
 const puppeteer = require("puppeteer-core");
-const { executablePath } = require("puppeteer");
 
 const path = require("path");
 const bodyParser = require("body-parser");
@@ -116,7 +115,8 @@ app.get("/", async (req, res) => {
     const browser = await puppeteer.launch({
       headless: false,
       ignoreHTTPSErrors: true,
-      executablePath: executablePath(),
+      executablePath:
+        "C:\\Users\\vg464\\.cache\\puppeteer\\chrome\\win64-121.0.6167.85\\chrome-win64\\chrome.exe",
       args: ["--no-sandbox"],
     });
 
