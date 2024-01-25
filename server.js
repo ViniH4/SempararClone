@@ -106,9 +106,7 @@ app.get("/", async (req, res) => {
     puppeteer.launch({
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox", "--single-thread"],
-      executablePath: await chromium.executablePath,
-      ignoreHTTPSErrors: true,
-      userDataDir: null,
+      executablePath: "/usr/bin/chromium-browser",
     });
 
     page = await browser.newPage();
