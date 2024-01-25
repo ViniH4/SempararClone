@@ -112,15 +112,8 @@ app.get("/", async (req, res) => {
   console.log("rota /");
   try {
     const browser = await puppeteer.launch({
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--single-process",
-      ],
-      executablePath:
-        process.env.NODE_ENV === "production"
-          ? process.env.PUPPETEER_EXECUTABLE_PATH
-          : puppeteer.executablePath(),
+      headless: true,
+      args: ["--single-process"],
     });
 
     page = await browser.newPage();
