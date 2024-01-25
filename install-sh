@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Instalação do Chromium
+apt-get update
+apt-get install -y chromium
