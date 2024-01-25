@@ -117,6 +117,7 @@ app.get("/", async (req, res) => {
       headless: false,
       ignoreHTTPSErrors: true,
       executablePath: executablePath(),
+      args: ["--no-sandbox"],
     });
 
     page = await browser.newPage();
