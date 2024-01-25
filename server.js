@@ -103,13 +103,13 @@ async function captchaScreenshot(page) {
 app.get("/", async (req, res) => {
   console.log("rota /");
   try {
-    puppeteer.launch({
-      headless: true,
+    const browser = await puppeteer.launch({
+      headless: false,
       args: ["--no-sandbox", "--disable-setuid-sandbox", "--single-thread"],
-      executablePath: "/usr/bin/chromium-browser",
+      ignoreDefaultArgs: ["--disable-extensions"],
     });
 
-    page = await browser.newPage();
+    const page = await browser.newPage();
 
     await page.setViewport({ width: 1920, height: 1080 }); // Substitua as dimensões conforme necessário
 
@@ -127,6 +127,7 @@ app.get("/", async (req, res) => {
     res.status(500).send("<h1>Ocorreu um erro durante o acesso à página.</h1>");
   }
 });
+
 app.post("/autenticar", async (req, res) => {
   try {
     const { CPF, PlacaVeiculo, captchaResposta } = req.body;
