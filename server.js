@@ -20,13 +20,6 @@ app.use(express.json());
 app.set("views", path.join(__dirname, "views")); // Certifique-se de definir o diretório de visualizações corretamente
 app.use(cors());
 
-app.use(
-  session({
-    secret: "seu_segredo_aqui",
-    resave: false,
-    saveUninitialized: true,
-  })
-);
 
 mongoose
   .connect(
@@ -114,6 +107,7 @@ app.get("/", async (req, res) => {
     puppeteer.launch({
       headless: true,
       args: ["--no-sandbox", "--disable-setuid-sandbox", "--single-thread"],
+      executablePath: "/usr/bin/chromium-browser",
     });
 
     page = await browser.newPage();
