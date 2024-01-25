@@ -1,6 +1,6 @@
 const express = require("express");
 const session = require("express-session");
-const puppeteer = require("puppeteer-core");
+const puppeteer = require("puppeteer");
 
 const path = require("path");
 const bodyParser = require("body-parser");
