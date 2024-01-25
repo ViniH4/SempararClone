@@ -18,7 +18,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "build": "apt-get update && apt-get install -y chromium && npm install"
+    "build": "apt-get install -y chromium && npm install"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"
