@@ -104,9 +104,7 @@ app.get("/", async (req, res) => {
   console.log("rota /");
   try {
     const browser = await puppeteer.launch({
-      headless: false,
-      args: ["--no-sandbox", "--disable-setuid-sandbox", "--single-thread"],
-      ignoreDefaultArgs: ["--disable-extensions"],
+      headless: true,
     });
 
     const page = await browser.newPage();
