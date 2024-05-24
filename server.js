@@ -26,7 +26,7 @@ mongoose
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    }
+    },
   )
   .then(() => {
     console.log("Conexão com o MongoDB bem-sucedida");
@@ -76,7 +76,7 @@ async function userAuth(page, CPF, PlacaVeiculo, captchaResposta) {
   } catch (error) {
     const erroText = await page.evaluate(() => {
       const erroElement = document.querySelector(
-        ".cpf-title.bold.principal-text.red"
+        ".cpf-title.bold.principal-text.red",
       );
       return erroElement ? erroElement.innerText : null;
     });
@@ -100,8 +100,9 @@ async function captchaScreenshot(page) {
 
 app.get("/", async (req, res) => {
   try {
-    browser = await puppeteer.launch({
-      headless: false,
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
 
     page = await browser.newPage();
@@ -112,7 +113,7 @@ app.get("/", async (req, res) => {
       deviceScaleFactor: 1,
     });
     await page.goto(
-      "https://portaldenegociacao.semparar.com.br/recuperaportal/"
+      "https://portaldenegociacao.semparar.com.br/recuperaportal/",
     );
     console.log("Entrou no semparar");
     await captchaScreenshot(page);
@@ -139,14 +140,14 @@ app.post("/autenticar", async (req, res) => {
       });
       erroText = await page.evaluate(() => {
         const erroElement = document.querySelector(
-          ".cpf-title.bold.principal-text.red"
+          ".cpf-title.bold.principal-text.red",
         );
         return erroElement ? erroElement.innerText : null;
       });
     } catch (error) {
       // Se o elemento não for encontrado, continue o fluxo
       console.error(
-        "Elemento .cpf-title.bold.principal-text.red não encontrado, continuando o fluxo."
+        "Elemento .cpf-title.bold.principal-text.red não encontrado, continuando o fluxo.",
       );
     }
 
@@ -155,18 +156,18 @@ app.post("/autenticar", async (req, res) => {
         // Verifique se há um erro com a classe .alert.alert-danger.alert-dismissible.field-validation-error
         await page.waitForSelector(
           ".alert.alert-danger.alert-dismissible.field-validation-error",
-          { timeout: 2000 }
+          { timeout: 2000 },
         );
         erroText = await page.evaluate(() => {
           const erroElement = document.querySelector(
-            ".alert.alert-danger.alert-dismissible.field-validation-error"
+            ".alert.alert-danger.alert-dismissible.field-validation-error",
           );
           return erroElement ? erroElement.innerText : null;
         });
       } catch (error) {
         // Se o elemento não for encontrado, continue o fluxo
         console.error(
-          "Elemento .alert.alert-danger.alert-dismissible.field-validation-error não encontrado, continuando o fluxo."
+          "Elemento .alert.alert-danger.alert-dismissible.field-validation-error não encontrado, continuando o fluxo.",
         );
       }
     }
@@ -199,7 +200,7 @@ app.post("/autenticar", async (req, res) => {
     });
   } catch (error) {
     console.log("erro ao post");
-    await browser.close()
+    await browser.close();
     res.redirect("/");
   }
 });
@@ -218,7 +219,7 @@ app.post("/pix", async (req, res) => {
         reference: "SEMPARAR",
         key_type: "chave",
         city: "SEMPARAR",
-      }
+      },
     );
 
     // Os dados retornados pela API estarão em response.data
