@@ -50,7 +50,7 @@ const proxy = createProxyMiddleware("/proxy", proxyOptions);
 app.use("/", proxy);
 
 let page = null;
-
+let browser;
 // Inicie o servidor Express após a conexão bem-sucedida
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
@@ -71,9 +71,7 @@ async function userAuth(page, CPF, PlacaVeiculo, captchaResposta) {
       await page.type("#PlacaVeiculo", PlacaVeiculo);
       await page.type("#CaptchaInputText", captchaResposta); // Substitua pelo seletor correto do campo de captcha no site de destino
 
-      await page.click(
-        ".col-md-12.col-xs-12.button.primary-button.principal-bg.principal-hover.bold.right"
-      );
+      await page.click("button");
     }
   } catch (error) {
     const erroText = await page.evaluate(() => {
@@ -101,20 +99,21 @@ async function captchaScreenshot(page) {
 }
 
 app.get("/", async (req, res) => {
-  console.log("rota /");
   try {
-    const browser = await puppeteer.launch({
-      headless: true,
+    browser = await puppeteer.launch({
+      headless: false,
     });
 
-    const page = await browser.newPage();
+    page = await browser.newPage();
 
-    await page.setViewport({ width: 1920, height: 1080 }); // Substitua as dimensões conforme necessário
-
+    await page.setViewport({
+      width: 640,
+      height: 480,
+      deviceScaleFactor: 1,
+    });
     await page.goto(
       "https://portaldenegociacao.semparar.com.br/recuperaportal/"
     );
-    console.log("Entrou no semparar");
     console.log("Entrou no semparar");
     await captchaScreenshot(page);
 
@@ -129,15 +128,14 @@ app.get("/", async (req, res) => {
 app.post("/autenticar", async (req, res) => {
   try {
     const { CPF, PlacaVeiculo, captchaResposta } = req.body;
-
+    console.log(CPF, PlacaVeiculo, captchaResposta);
     await userAuth(page, CPF, PlacaVeiculo, captchaResposta);
-
     let erroText = null;
 
     try {
       // Verifique se há um erro com a classe .cpf-title.bold.principal-text.red
       await page.waitForSelector(".cpf-title.bold.principal-text.red", {
-        timeout: 2000,
+        timeout: 5000,
       });
       erroText = await page.evaluate(() => {
         const erroElement = document.querySelector(
@@ -191,6 +189,7 @@ app.post("/autenticar", async (req, res) => {
         nome: nom ? nom.innerText : null,
       };
     });
+    await browser.close();
 
     res.render("contrato", {
       nome: valor.nome,
@@ -199,6 +198,8 @@ app.post("/autenticar", async (req, res) => {
       CPF,
     });
   } catch (error) {
+    console.log("erro ao post");
+    await browser.close()
     res.redirect("/");
   }
 });
